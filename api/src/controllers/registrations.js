@@ -11,20 +11,28 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, passwordConfirmation } = req.body;
 
-  try {
-    const user = await User.create({
-      email,
-      password,
-    });
+  if (User.passwordsMatch(password, passwordConfirmation)) {
+    try {
+      const user = await User.create({
+        email,
+        password,
+      });
 
+      req.session.userId = user.id;
+
+      res.json({
+        user,
+      });
+    } catch (error) {
+      res.json({
+        errors: error,
+      });
+    }
+  } else {
     res.json({
-      user,
-    });
-  } catch (error) {
-    res.json({
-      errors: error,
+      message: 'Passwords must match',
     });
   }
 });

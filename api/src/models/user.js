@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+
+    static passwordsMatch(password, passwordConfirmation) {
+      return password === passwordConfirmation;
+    }
   }
   User.init(
     {

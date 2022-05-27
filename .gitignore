@@ -6,6 +6,7 @@
 /frontend/.env
 /frontend/.DS_STORE
 /frontend/node_modules
+/frontend/package-lock.json
 /frontend/scripts/flow/*/.flowconfig
 /frontend/.flowconfig
 /frontend/*~

@@ -1,9 +1,10 @@
 import { BaseSyntheticEvent } from 'react';
 import { Form } from 'react-bootstrap';
+import { ModalStateType } from '../../../../config/types';
 
 type Props = {
-  setModalState: any;
-  modalState: any;
+  setModalState: React.Dispatch<React.SetStateAction<ModalStateType>>;
+  modalState: ModalStateType;
 };
 
 const SignUpForm = ({ setModalState, modalState }: Props) => {

@@ -1,8 +1,9 @@
+import { ModalStateType } from '../../../../config/types';
 import SignUpForm from './SignUpForm';
 
 type Props = {
-  setModalState: any;
-  modalState: any;
+  setModalState: React.Dispatch<React.SetStateAction<ModalStateType>>;
+  modalState: ModalStateType;
 };
 
 const index = (props: Props) => {

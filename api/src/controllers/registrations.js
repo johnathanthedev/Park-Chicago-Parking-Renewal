@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
   });
 });
 
-router.post('/', async (req, res) => {
+router.post('/sign-up', async (req, res) => {
   const { email, password, passwordConfirmation } = req.body;
 
   if (User.passwordsMatch(password, passwordConfirmation)) {

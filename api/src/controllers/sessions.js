@@ -33,7 +33,6 @@ router.get('/ping', (req, res) => {
 
 router.delete('/sign-out', (req, res) => {
   req.session = null;
-  // delete req.session.userId;
   res.json({
     message: 'Signed out successfully',
   });

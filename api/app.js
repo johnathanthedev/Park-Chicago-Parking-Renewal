@@ -17,7 +17,6 @@ app.use(express.json());
 app.use(helmet());
 app.use(
   cookieSession({
-    name: 'Park-Chicago-Parking-Renewal-Development-Session',
     keys: [process.env.COOKIE_SESSION_SECRET],
     maxAge: 24 * 60 * 60 * 1000, // 24 hours,
     httpOnly: true,

@@ -7,14 +7,18 @@ import {
   Button,
   Modal,
 } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { SIGN_IN, SIGN_UP } from '../../../config/constants';
 import SignInForm from '../forms/SignInForm';
 import SignUpForm from '../forms/SignUpForm';
+import { ModalStateType } from '../../../config/types';
 
 type Props = {};
 
 const Navbar = (props: Props) => {
-  const [modalState, setModalState] = useState({
+  const navigate = useNavigate();
+
+  const [modalState, setModalState] = useState<ModalStateType>({
     show: false,
     type: '',
     registration: {
@@ -35,7 +39,6 @@ const Navbar = (props: Props) => {
       return userId;
     };
     isUserSignedIn().then((data) => {
-      console.log(data.data.userId);
       data.data.userId !== null
         ? setModalState({
             ...modalState,
@@ -86,9 +89,24 @@ const Navbar = (props: Props) => {
               password: modalState.registration.password,
               passwordConfirmation:
                 modalState.registration.passwordConfirmation,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              withCredentials: true,
             }
           );
-          console.log(signUpRes);
+          signUpRes.status === 200 &&
+            setModalState({
+              ...modalState,
+              show: false,
+              user: {
+                ...modalState.user,
+                isSignedIn: true,
+              },
+            });
+          navigate('/dashboard');
           break;
         case SIGN_IN:
           const signInRes = await axios.post(
@@ -104,7 +122,16 @@ const Navbar = (props: Props) => {
               withCredentials: true,
             }
           );
-          console.log(signInRes);
+          signInRes.status === 200 &&
+            setModalState({
+              ...modalState,
+              show: false,
+              user: {
+                ...modalState.user,
+                isSignedIn: true,
+              },
+            });
+          navigate('/dashboard');
           break;
         default:
           break;
@@ -115,11 +142,19 @@ const Navbar = (props: Props) => {
   };
 
   const handleSignOut = async () => {
-    const resp = await axios.delete('http://localhost:3000/sessions/sign-out', {
-      headers: { withCredentials: true },
+    await axios.delete('http://localhost:3000/sessions/sign-out', {
+      withCredentials: true,
     });
 
-    console.log(resp);
+    setModalState({
+      ...modalState,
+      user: {
+        ...modalState.user,
+        isSignedIn: false,
+      },
+    });
+
+    navigate('/');
   };
 
   return (

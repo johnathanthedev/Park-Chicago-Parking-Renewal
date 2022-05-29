@@ -5,12 +5,12 @@ import Navbar from './shared/Navbar';
 function App() {
   return (
     <div className='App'>
-      <Navbar />
       <BrowserRouter>
+        <Navbar />
         <Routes>
           {publicRoutes.map((publicRoute, index) => (
             <Route
-              key={index + 1}
+              key={`public-${index + 1}`}
               path={publicRoute.path}
               element={publicRoute.component}
             />
@@ -18,7 +18,7 @@ function App() {
 
           {privateRoutes.map((privateRoute, index) => (
             <Route
-              key={index + 1}
+              key={`private-${index + 1}`}
               path={privateRoute.path}
               element={privateRoute.component}
             />

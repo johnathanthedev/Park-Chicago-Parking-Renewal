@@ -25,6 +25,7 @@ app.use(
 
 app.use('/registrations', require('./src/controllers/registrations'));
 app.use('/sessions', require('./src/controllers/sessions'));
+app.use('/parking', require('./src/controllers/parking'));
 
 try {
   db.sequelize.authenticate();
